@@ -1,6 +1,8 @@
 import React from 'react';
 import { Statistics } from '../Statistics/Statistics';
 import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
+import { Notification } from '../Notification/Notification';
+import { Section } from '../Section/Section';
 
 export class App extends React.Component {
   state = {
@@ -27,37 +29,27 @@ export class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Please leave feedback</h1>
-
+      <Section title="Please leave feedback">
         <FeedbackOptions
-          items={this.state}
+          //? options={this.state}
+
+          options={[this.state]}
           onLeaveFeedback={this.handleButtonChange}
         ></FeedbackOptions>
-        {/* <button id="good" onClick={this.handleButtonChange}>
-          Good
-        </button>
-        <button id="neutral" onClick={this.handleButtonChange}>
-          Neutral
-        </button>
-        <button id="bad" onClick={this.handleButtonChange}>
-          Bad
-        </button> */}
+        <h2>Statistics</h2>
 
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        ></Statistics>
-        {/* <h2>Statistics</h2>
-        <p>Good: {this.state.good}</p>
-        <p>Neutral: {this.state.neutral}</p>
-        <p>Bad: {this.state.bad}</p>
-        <p>Total: {this.countTotalFeedback()}</p>
-        <p>Positive feedback: {this.countPositiveFeedbackPercentage()}%</p> */}
-      </div>
+        {this.countTotalFeedback() === 0 ? (
+          <Notification message="There is no feedback"></Notification>
+        ) : (
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={this.countTotalFeedback()}
+            positivePercentage={this.countPositiveFeedbackPercentage()}
+          ></Statistics>
+        )}
+      </Section>
     );
   }
 }

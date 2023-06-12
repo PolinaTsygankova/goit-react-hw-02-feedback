@@ -11,10 +11,9 @@ export class App extends Component {
     bad: 0,
   };
 
-  handleButtonChange = e => {
-    const buttonName = e.currentTarget.id;
+  handleButtonChange = option => {
     this.setState(prevState => {
-      return { [buttonName]: prevState[buttonName] + 1 };
+      return { [option]: prevState[option] + 1 };
     });
   };
 
@@ -24,7 +23,7 @@ export class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    return Math.round(([this.state.good] * 100) / [this.countTotalFeedback()]);
+    return Math.round((this.state.good * 100) / this.countTotalFeedback());
   };
 
   render() {
@@ -34,7 +33,7 @@ export class App extends Component {
           <FeedbackOptions
             //? options={this.state}
 
-            options={[this.state]}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.handleButtonChange}
           ></FeedbackOptions>
         </Section>
